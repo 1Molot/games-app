@@ -10,7 +10,7 @@ export type Game = {
     price: string;
     language: string[];
     voice: string[];
-    multiplayer?: Multiplayer; // Необязательное поле
+    multiplayer: Multiplayer;
     platform: string;
     name: string;
     coverImage: string[];

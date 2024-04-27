@@ -44,7 +44,7 @@ export const PageGames = () => {
                 <h2>Список игр</h2>
                 <div>
                     <label>Фильтр по платформе:</label>
-                    <select onChange={(e) => filterGamesByPlatform(e.target.value)}>
+                    <select onChange={(e) => filterGamesByPlatform(e.target.value as Platform)}>
                         <option value="">Все платформы</option>
                         <option value="PC">PC</option>
                         <option value="PlayStation">PlayStation</option>
@@ -53,7 +53,7 @@ export const PageGames = () => {
                 </div>
                 <div>
                     <label>Сортировка по рейтингу:</label>
-                   <select onChange={(e) => sortGamesByRating(e.target.value)}>
+                   <select onChange={(e) => sortGamesByRating(e.target.value as RatingSortOrder)}>
                        <option value="">Без сортировки</option>
                        <option value="asc">По возрастанию</option>
                          <option value="desc">По убыванию</option>
@@ -81,7 +81,15 @@ export const PageGames = () => {
                              {Game.multiplayer?.offline > 0 && <span>Оффлайн: {Game.multiplayer.offline} игрока(ов)</span>}
                            {Game.multiplayer.online && <span>Онлайн</span>}
                         </td>
-                     </tr>
+                       <td >
+                           {
+                               Game.coverImage.map((image:string,index) => (
+                                   <img key={index} src={image} alt="Cover Image" style={{ textAlign: 'right',width:'100px' }}/>
+                               ))
+                           }
+
+                       </td>
+                   </tr>
                 ))}
                 </tbody>
             </table>
