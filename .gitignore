@@ -8,6 +8,9 @@
 # testing
 /coverage
 
+# Игнорировать папку .idea
+.idea/
+
 # production
 /build
 
