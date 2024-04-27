@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 // // Компонент отдельной игры
 // const GameItem = ({ game }) => {
 //     const [showDetails, setShowDetails] = useState(false); // Флаг показа дополнительных деталей игры
@@ -27,15 +27,15 @@ import React from 'react';
 //         </div>
 //     );
 // };
-//
-// // Компонент приложения
-// const App = () => {
-//     return (
-//         <div>
-//             <h1>Страница со списком игр</h1>
-//             <GameList />
-//         </div>
-//     );
-// };
-//
-// export default App;
+// //
+// // // Компонент приложения
+// // const App = () => {
+// //     return (
+// //         <div>
+// //             <h1>Страница со списком игр</h1>
+// //             <GameList />
+// //         </div>
+// //     );
+// // };
+// //
+// // export default App;

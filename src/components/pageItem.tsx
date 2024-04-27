@@ -1,101 +1,109 @@
-import React, {useEffect, useState} from 'react';
-import {Game} from "../types/types";
-import {GAMES} from "../constans/games";
+import React from 'react';
+import {useCustomFetch} from "../api/useCustomFetch/useCustomFetch";
 
 
-type Platform = '' | 'PC' | 'PlayStation' | 'Xbox';
-type RatingSortOrder = '' | 'asc' | 'desc';
+type Platform1 = {
+   platform:{id:number,name:string};
+}
+type Genre = {
+    id: number
+    name: string
+}
+type ShortScreenshot = {
+    id: number
+    image: string
+}
+type Tag = {
+    id: number,
+    slug: string,
+    language: string,
+    games_count: number,   //?
+}
+
+type GameLister = {
+    id: number,
+    name: string,
+    rating: number,
+    background_image: string,
+    parent_platforms: Platform1[]
+    genres: Genre[]
+    short_screenshots: ShortScreenshot[]
+    tags: Tag[]
+}
 
 export const PageGames = () => {
 
-    const [games, setGames] = useState<Game[]>([]); // Список игр
-    const [platformFilter, setPlatformFilter] = useState<Platform>(''); // Фильтр платформы
-    const [ratingSort, setRatingSort] = useState<RatingSortOrder>(''); // Сортировка по рейтингу
+    const [data, loading, error] = useCustomFetch<{
+        results: GameLister[];
+    }>('games', {page_size: 10});
 
+    console.log(data)
 
-   useEffect(() => {
-         setGames(GAMES);
-     }, []);
-
-    // Фильтрация игр по платформе
-     const filterGamesByPlatform = (platform:Platform) => {
-         setPlatformFilter(platform);
-    };
-
-    // Сортировка игр по рейтингу
-    const sortGamesByRating = (sortOrder:RatingSortOrder) => {
-        setRatingSort(sortOrder);
-     };
-
-    // Применение фильтрации и сортировки к списку игр
-    let filteredGames = [...games];
-   if (platformFilter) {
-        filteredGames = filteredGames.filter(game => game.platform === platformFilter);
+    if (loading) {
+        return <div>Loading...</div>;
     }
-     if (ratingSort === 'asc') {
-        filteredGames.sort((a, b) => a.rating - b.rating);
-   } else if (ratingSort === 'desc') {
-        filteredGames.sort((a, b) => b.rating - a.rating);
+
+    if (error) {
+        return <div>Error: {error.message}</div>;
     }
+
+    if (!data) {
+        return null;
+    }
+
+    //фильтрацию по рейтингу , конкретная платформа , по играм которым есть только русский язык,фильтрация по количеству гроков(все игры которые меньше 500)
+
+
+    let filteredGames = data.results
 
     return (
         <div>
             <div>
                 <h2>Список игр</h2>
-                <div>
-                    <label>Фильтр по платформе:</label>
-                    <select onChange={(e) => filterGamesByPlatform(e.target.value as Platform)}>
-                        <option value="">Все платформы</option>
-                        <option value="PC">PC</option>
-                        <option value="PlayStation">PlayStation</option>
-                         <option value="Xbox">Xbox</option>
-                    </select>
-                </div>
-                <div>
-                    <label>Сортировка по рейтингу:</label>
-                   <select onChange={(e) => sortGamesByRating(e.target.value as RatingSortOrder)}>
-                       <option value="">Без сортировки</option>
-                       <option value="asc">По возрастанию</option>
-                         <option value="desc">По убыванию</option>
-                   </select>
-                 </div>
-             </div>
+            </div>
             <table>
-                 <thead>
+                <thead>
                 <tr>
                     <th>Название</th>
                     <th>Рейтинг</th>
                     <th>Платформа</th>
-                   <th>Язык</th>
-                    <th>Многопользовательский</th>
+                    <th>Язык</th>
+                    <th>Количество игроков</th>
                 </tr>
-                 </thead>
-                 <tbody>
-                {filteredGames.map(Game => (
-                   <tr key={Game.id}>
-                        <td>{Game.title}</td>
-                         <td>{Game.rating}</td>
-                         <td>{Game.platform}</td>
-                        <td>{Game.language.includes('Russian') ? 'Да' : 'Нет'}</td>
-                        <td>
-                             {Game.multiplayer?.offline > 0 && <span>Оффлайн: {Game.multiplayer.offline} игрока(ов)</span>}
-                           {Game.multiplayer.online && <span>Онлайн</span>}
+                </thead>
+                <tbody>
+                {filteredGames.map(game => (
+                    <tr key={game.id}>
+                        <td>{game.name}</td>
+                        <td>{game.rating}</td>
+                        <td>{
+                            game.parent_platforms.map(p => (
+                             <span key={p.platform.id}>{`${p.platform.name} `}</span>
+                            ))
+                        }</td>
+                        <td>{
+                          new Set(game.tags.map(l => (
+                              l.language
+                          )))
+                        }
                         </td>
-                       <td >
-                           {
-                               Game.coverImage.map((image:string,index) => (
-                                   <img key={index} src={image} alt="Cover Image" style={{ textAlign: 'right',width:'100px' }}/>
-                               ))
-                           }
+                        <td>
+                            {game.tags.find(g => g.slug === 'multiplayer')?.games_count || 0}
 
-                       </td>
-                   </tr>
+                        </td>
+                        <td>
+                            {
+                                <img src={game.background_image} alt="Cover Image"
+                                     style={{textAlign: 'right', width: '100px'}}/>
+                            }
+
+                        </td>
+                    </tr>
                 ))}
                 </tbody>
             </table>
-             {filteredGames.length === 0 && <p>Нет доступных игр.</p>}
-         </div>
-     );
- };
-
+            {filteredGames.length === 0 && <p>Нет доступных игр.</p>}
+        </div>
+    );
+};
 
