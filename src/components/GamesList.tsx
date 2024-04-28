@@ -140,6 +140,11 @@ export const GameList = () => {
                         <p>Рейтинг: {game.rating}</p>
                         <p>Платформы: {game.parent_platforms.map((p) => p.platform.name).join(', ')}</p>
                         <p>Жанры: {game.genres.map((genre) => genre.name).join(', ')}</p>
+                        <p>Язык: {
+                            new Set(game.tags.map(l => (
+                                l.language
+                            )))
+                        }</p>
                         <p>Количество
                             игроков: {game.tags.find((tag) => tag.slug === 'multiplayer')?.games_count || 0}</p>
                     </div>
