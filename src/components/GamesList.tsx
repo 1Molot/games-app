@@ -4,7 +4,7 @@ import './GamesList.css';
 import {GameLister} from "../types/types";
 
 export const GameList = () => {
-    const [data, loading, error] = useCustomFetch<{ results: GameLister[] }>('games', {page_size: 10});
+    const [data, loading, error] = useCustomFetch<{ results: GameLister[] }>('games', {page_size: 20});
     const [filteredGames, setFilteredGames] = useState<GameLister[]>([]);
     const [ratingFilter, setRatingFilter] = useState<number | null>(null);
     const [platformFilter, setPlatformFilter] = useState<string | null>(null);

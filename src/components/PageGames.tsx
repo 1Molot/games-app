@@ -7,7 +7,7 @@ export const PageGames = () => {
 
     const [data, loading, error] = useCustomFetch<{
         results: GameLister[];
-    }>('games', {page_size: 10});
+    }>('games', {page_size: 20});
 
     console.log(data)
 
