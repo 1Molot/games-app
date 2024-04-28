@@ -1,35 +1,7 @@
 import React from 'react';
 import {useCustomFetch} from "../api/useCustomFetch/useCustomFetch";
+import {GameLister} from "../types/types";
 
-
-type Platform1 = {
-   platform:{id:number,name:string};
-}
-type Genre = {
-    id: number
-    name: string
-}
-type ShortScreenshot = {
-    id: number
-    image: string
-}
-type Tag = {
-    id: number,
-    slug: string,
-    language: string,
-    games_count: number,   //?
-}
-
-type GameLister = {
-    id: number,
-    name: string,
-    rating: number,
-    background_image: string,
-    parent_platforms: Platform1[]
-    genres: Genre[]
-    short_screenshots: ShortScreenshot[]
-    tags: Tag[]
-}
 
 export const PageGames = () => {
 
@@ -50,9 +22,6 @@ export const PageGames = () => {
     if (!data) {
         return null;
     }
-
-    //фильтрацию по рейтингу , конкретная платформа , по играм которым есть только русский язык,фильтрация по количеству гроков(все игры которые меньше 500)
-
 
     let filteredGames = data.results
 
@@ -78,7 +47,7 @@ export const PageGames = () => {
                         <td>{game.rating}</td>
                         <td>{
                             game.parent_platforms.map(p => (
-                             <span key={p.platform.id}>{`${p.platform.name} `}</span>
+                             <span key={p.id}>{`${p.name} `}</span>
                             ))
                         }</td>
                         <td>{

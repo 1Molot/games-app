@@ -1,17 +1,32 @@
-export type Multiplayer = {
-    offline: number;
-    online: boolean;
+export type Platform = {
+    id: number;
+    name: string;
 };
 
-export type Game = {
+export type Genre = {
     id: number;
-    title?: string; // Необязательное поле
-    rating: number;
-    price: string;
-    language: string[];
-    voice: string[];
-    multiplayer: Multiplayer;
-    platform: string;
     name: string;
-    coverImage: string[];
+};
+
+export type ShortScreenshot = {
+    id: number;
+    image: string;
+};
+
+export type Tag = {
+    id: number;
+    slug: string;
+    language: string;
+    games_count: number;
+};
+
+export type GameLister = {
+    id: number;
+    name: string;
+    rating: number;
+    background_image: string;
+    parent_platforms: Platform[];
+    genres: Genre[];
+    short_screenshots: ShortScreenshot[];
+    tags: Tag[];
 };

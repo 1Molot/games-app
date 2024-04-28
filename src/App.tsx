@@ -1,14 +1,14 @@
 import React from 'react';
 import './App.css';
-import {PageGames} from "./components/pageItem";
+import {GameList} from "./components/GamesList";
 
 function App() {
-  return (
-<>
-
-  <PageGames/>
-</>
-  );
+    return (
+        <>
+            <GameList/>
+            {/*<PageGames/>*/}
+        </>
+    );
 }
 
 export default App;
