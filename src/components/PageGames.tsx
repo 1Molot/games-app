@@ -47,7 +47,7 @@ export const PageGames = () => {
                         <td>{game.rating}</td>
                         <td>{
                             game.parent_platforms.map(p => (
-                             <span key={p.id}>{`${p.name} `}</span>
+                             <span key={p.platform.id}>{`${p.platform.name} `}</span>
                             ))
                         }</td>
                         <td>{

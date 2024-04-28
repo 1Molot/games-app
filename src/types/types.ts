@@ -25,7 +25,9 @@ export type GameLister = {
     name: string;
     rating: number;
     background_image: string;
-    parent_platforms: Platform[];
+    parent_platforms: {
+        platform: Platform
+    }[];
     genres: Genre[];
     short_screenshots: ShortScreenshot[];
     tags: Tag[];

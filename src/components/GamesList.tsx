@@ -21,7 +21,7 @@ export const GameList = () => {
 
             if (platformFilter) {
                 filtered = filtered.filter((game) =>
-                    game.parent_platforms.some((platform) => platform.name === platformFilter)
+                    game.parent_platforms.some((p) => p.platform.name === platformFilter)
                 );
             }
 
@@ -103,6 +103,10 @@ export const GameList = () => {
                             <option value="PC">PC</option>
                             <option value="Xbox">Xbox</option>
                             <option value="PlayStation">PlayStation</option>
+                            <option value="Apple Macintosh">Apple Macintosh</option>
+                            <option value="Android">Android</option>
+                            <option value="Linux">Linux</option>
+                            <option value="Nintendo">Nintendo</option>
                         </select>
                     </label>
                 </div>
@@ -134,7 +138,7 @@ export const GameList = () => {
                         <img src={game.background_image} alt={game.name}/>
                         <h3>{game.name}</h3>
                         <p>Рейтинг: {game.rating}</p>
-                        <p>Платформы: {game.parent_platforms.map((platform) => platform.name).join(', ')}</p>
+                        <p>Платформы: {game.parent_platforms.map((p) => p.platform.name).join(', ')}</p>
                         <p>Жанры: {game.genres.map((genre) => genre.name).join(', ')}</p>
                         <p>Количество
                             игроков: {game.tags.find((tag) => tag.slug === 'multiplayer')?.games_count || 0}</p>
