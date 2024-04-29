@@ -17,7 +17,6 @@ export const GameList = () => {
     const [languageFilter, setLanguageFilter] = useState<string | null>(null);
     const [playersFilter, setPlayersFilter] = useState<number | null>(null);
 
-    console.log(languageFilter)
 
     useEffect(() => {
         if (data) {
@@ -35,7 +34,7 @@ export const GameList = () => {
 
             if (languageFilter) {
                 filtered = filtered.filter((game) =>
-                    game.tags.some((tag) => tag.language === languageFilter)
+                    game.tags.some((tag) => tags[tag.language] === languageFilter)
                 );
             }
 
@@ -84,7 +83,6 @@ export const GameList = () => {
 
     const handleLanguageChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const language = event.target.value;
-        // console.log(language)
         setLanguageFilter(language);
     };
 
@@ -92,7 +90,6 @@ export const GameList = () => {
         const players = parseInt(event.target.value);
         setPlayersFilter(players);
     };
-
 
     return (
         <div className="page-games">
@@ -149,7 +146,7 @@ export const GameList = () => {
                         <p>Рейтинг: {game.rating}</p>
                         <p>Платформы: {game.parent_platforms.map((p) => p.platform.name).join(', ')}</p>
                         <p>Жанры: {game.genres.map((genre) => genre.name).join(', ')}</p>
-                        <p>Язык: {game.tags.map((tag) => tags[tag.language]).join(', ')}</p>
+                        <p>Язык: {Array.from(new Set(game.tags.map((tag) => tags[tag.language] || '')))}</p>
                         <p>Количество
                             игроков: {game.tags.find((tag) => tag.slug === 'multiplayer')?.games_count || 0}</p>
                     </div>
