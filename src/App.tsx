@@ -5,7 +5,7 @@ import {GameList} from "./components/GamesList";
 function App() {
     return (
         <>
-            <GameList/>
+            <GameList />
         </>
     );
 }
