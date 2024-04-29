@@ -3,6 +3,12 @@ import {useCustomFetch} from '../api/useCustomFetch/useCustomFetch';
 import './GamesList.css';
 import {GameLister} from "../types/types";
 
+const tags: { [key: string]: string } = {
+    eng: "English",
+    ru:"Russian",
+    spa:"Spanish"
+};
+
 export const GameList = () => {
     const [data, loading, error] = useCustomFetch<{ results: GameLister[] }>('games', {page_size: 20});
     const [filteredGames, setFilteredGames] = useState<GameLister[]>([]);
@@ -10,6 +16,8 @@ export const GameList = () => {
     const [platformFilter, setPlatformFilter] = useState<string | null>(null);
     const [languageFilter, setLanguageFilter] = useState<string | null>(null);
     const [playersFilter, setPlayersFilter] = useState<number | null>(null);
+
+    console.log(languageFilter)
 
     useEffect(() => {
         if (data) {
@@ -76,6 +84,7 @@ export const GameList = () => {
 
     const handleLanguageChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const language = event.target.value;
+        // console.log(language)
         setLanguageFilter(language);
     };
 
@@ -140,11 +149,7 @@ export const GameList = () => {
                         <p>Рейтинг: {game.rating}</p>
                         <p>Платформы: {game.parent_platforms.map((p) => p.platform.name).join(', ')}</p>
                         <p>Жанры: {game.genres.map((genre) => genre.name).join(', ')}</p>
-                        <p>Язык: {
-                            new Set(game.tags.map(l => (
-                                l.language
-                            )))
-                        }</p>
+                        <p>Язык: {game.tags.map((tag) => tags[tag.language]).join(', ')}</p>
                         <p>Количество
                             игроков: {game.tags.find((tag) => tag.slug === 'multiplayer')?.games_count || 0}</p>
                     </div>
