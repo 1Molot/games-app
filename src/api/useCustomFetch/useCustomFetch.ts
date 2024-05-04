@@ -1,5 +1,5 @@
 import {useCallback, useEffect, useState} from "react";
-import {APIKEY, BASEURL} from "../constansApi";
+import {APIKEY, BASEURL} from "../../constants/constantApi";
 
 export interface FetchOptions {
     method: string;
@@ -35,7 +35,8 @@ export const useCustomFetch = <T>(path: string,queryParams = {}, options?: Fetch
         } finally {
             setLoading(false);
         }
-    }, [options, path, queryParams]);
+    }, []);
+
 
     useEffect(() => {
         fetchData();

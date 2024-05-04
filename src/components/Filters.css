@@ -1,0 +1,30 @@
+.filters {
+    margin-bottom: 20px;
+}
+
+.filters h2 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.filters div {
+    margin-bottom: 10px;
+}
+
+.filters label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.filters input[type="number"],
+.filters select {
+    max-width: 200px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.filters select {
+    max-width: 210px;
+}
