@@ -35,7 +35,7 @@ export const useCustomFetch = <T>(path: string,queryParams = {}, options?: Fetch
         } finally {
             setLoading(false);
         }
-    }, []);
+    }, [options, path, queryParams]);
 
     useEffect(() => {
         fetchData();

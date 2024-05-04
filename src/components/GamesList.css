@@ -63,6 +63,12 @@
     border-radius: 4px;
 }
 
+@media screen and (max-width: 650px) {
+    .game-card {
+        padding: 0;
+    }
+}
+
 .game-card img {
     width: 200px;
     height: 100px;
