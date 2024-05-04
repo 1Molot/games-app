@@ -22,6 +22,7 @@ export const GameList = () => {
         return null;
     }
 
+
     return (
         <div className="page-games">
             <Filters results={data.results} setFilteredGames={setFilteredGames}/>
